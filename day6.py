@@ -4,10 +4,10 @@ digits = [int(x) for x in sys.argv[1:]]
 redistribute_index = 0
 redistributed_value = 0
 cycles = 0
-seen_configurations = {}
+seen_configurations = []
 
 while str(digits) not in seen_configurations:
-    seen_configurations[str(digits)] = True
+    seen_configurations.append(str(digits))
     redistributed_value = max(digits)
     redistribute_index = digits.index(redistributed_value)
 
@@ -21,3 +21,4 @@ while str(digits) not in seen_configurations:
     cycles += 1
 
 print(cycles)
+print(cycles - seen_configurations.index(str(digits)))
