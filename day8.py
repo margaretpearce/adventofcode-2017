@@ -3,6 +3,7 @@ import operator
 
 def part_a(instructions):
     registers = {}
+    max_value_held = 0
 
     for i in instructions:
         reg, action, val, _, comp_reg, op, comp_val = i.split(" ")
@@ -13,8 +14,11 @@ def part_a(instructions):
             multiplier = 1 if action == "inc" else -1
             registers[reg] = registers.get(reg, 0) + (multiplier * val)
 
+            if registers[reg] > max_value_held:
+                max_value_held = registers[reg]
+
     sorted_registers = sorted(registers.items(), key=operator.itemgetter(1))
-    return sorted_registers[-1]
+    return sorted_registers[-1], max_value_held
 
 
 def check_condition(comp_reg_val, op, comp_val):
@@ -37,7 +41,9 @@ def check_condition(comp_reg_val, op, comp_val):
 def main():
     with open("input/day8_1.txt", "r") as input_data:
         instructions = [line.replace('\n', '') for line in input_data.readlines()]
-    print(part_a(instructions))
+    largest_register, max_hit = part_a(instructions)
+    print(largest_register)
+    print(max_hit)
 
 
 if __name__ == "__main__":
